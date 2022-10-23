@@ -1,0 +1,198 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+
+
+    <style>
+        td,
+        th {
+            border: 1px solid black;
+        }
+
+        table {
+            border: 1px solid black;
+            width: 100%;
+        }
+
+        .gioHang {
+            float: right;
+        }
+
+        .card {
+            display: flex;
+            flex-wrap: wrap;
+            align-items: center;
+            color: blue;
+            margin-left: 800px;
+        }
+
+        .row {
+            display: flex;
+            flex-direction: row;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+
+        .block {
+            display: flex;
+            flex: 25%;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            margin: 20px 0;
+        }
+
+        .block img {
+            width: 150px;
+            height: 150px;
+        }
+
+        #wrap-products {
+            display: flex;
+            flex-wrap: wrap;
+        }
+    </style>
+    <script>
+        $(document).ready(function () {
+            var products = [
+                {
+                    id: 1,
+                    name: 'Nhà giả kim',
+                    imageUrl: 'http://isach.info/images/story/cover/nha_gia_kim__paulo_coelho.jpg',
+                    price: 69000,
+                    qty: 1,
+                    totalPrice: 69000,
+                },
+                {
+                    id: 2,
+                    name: 'Khởi nghiệp 4.0',
+                    imageUrl: 'http://isach.info/images/story/cover/nha_gia_kim__paulo_coelho.jpg',
+                    price: 139000,
+                    qty: 1,
+                    totalPrice: 139000,
+                },
+                {
+                    id: 3,
+                    name: 'Tư duy phản biện',
+                    imageUrl: 'http://isach.info/images/story/cover/nha_gia_kim__paulo_coelho.jpg',
+                    price: 85000,
+                    qty: 1,
+                    totalPrice: 85000,
+                },
+                {
+                    id: 4,
+                    name: 'Trên đường băng',
+                    imageUrl: 'http://isach.info/images/story/cover/nha_gia_kim__paulo_coelho.jpg',
+                    price: 80000,
+                    qty: 1,
+                    totalPrice: 80000,
+                },
+                {
+                    id: 5,
+                    name: 'Tokyo hoàng đạo án',
+                    imageUrl: 'http://isach.info/images/story/cover/nha_gia_kim__paulo_coelho.jpg',
+                    price: 90000,
+                    qty: 1,
+                    totalPrice: 90000,
+                },
+                {
+                    id: 6,
+                    name: 'Biên niên sử thế giới bằng hình',
+                    imageUrl: 'http://isach.info/images/story/cover/nha_gia_kim__paulo_coelho.jpg',
+                    price: 330000,
+                    qty: 1,
+                    totalPrice: 330000,
+                },
+                {
+                    id: 7,
+                    name: 'Lịch sử thế giới',
+                    imageUrl: 'http://isach.info/images/story/cover/nha_gia_kim__paulo_coelho.jpg',
+                    price: 59000,
+                    qty: 1,
+                    totalPrice: 59000,
+                },
+                {
+                    id: 8,
+                    name: 'SAPIENS: Lược sử loài người',
+                    imageUrl: 'http://isach.info/images/story/cover/nha_gia_kim__paulo_coelho.jpg',
+                    price: 29000,
+                    qty: 1,
+                    totalPrice: 29000,
+                },
+            ]
+
+            for (var i = 0; i < products.length; i++) {
+                $("#wrap-products").append(
+                    `<div class="block">
+                        <img
+                            src="${products[i].imageUrl}" />
+                        <p>${products[i].name}</p>
+                        <h3>
+                            Giá:
+                            <span>${products[i].price}</span>
+                        </h3>
+                        <button value = ${products[i].id} class = "btnChonMua">Chon mua</button>
+                    </div>`
+                );
+            }
+
+            //Mảng localStorage
+            var arrLocalStorage = [];
+            JSON.parse(localStorage.getItem('productsCart')) ? arrLocalStorage = JSON.parse(localStorage.getItem('productsCart')) : arrLocalStorage = [];
+            
+            //Mảng id
+            var arrId = []
+            for (var i =0; i < arrLocalStorage.length; i++) {
+                arrId.push(arrLocalStorage[i].id)
+            }
+
+            $(".btnChonMua").click(function () {
+                console.log("value" + $(this).val());
+                for(var i = 0; i < products.length; i++) {
+                    //Kiểm tra giỏ hàng đã tồn tại thì không thêm vào arrLocalStorage
+                    if ($(this).val() == products[i].id && arrId.indexOf(products[i].id) == -1 ) {
+                        arrId.push(products[i].id);
+                        console.log(arrId);
+                        console.log();
+                        arrLocalStorage.push(products[i]);
+                        console.log(arrLocalStorage);
+                        localStorage.setItem('productsCart', JSON.stringify(arrLocalStorage));
+                    }
+                }
+            });
+        });
+    </script>
+    
+</head>
+
+<body>
+    <table>
+        <tr>
+            <th>MSSV: 20521569</th>
+            <th>Họ tên khách hàng: Nguyễn Hữu Long</th>
+        </tr>
+        <tr>
+            <td colspan="2">
+                <a href="./Cau2.html" class="gioHang" id ="gioHang">
+                    Giỏ hàng
+                </a>
+            </td>
+        </tr>
+        <tr>
+            <td colspan="2">
+                <div id="wrap-products">
+
+                </div>
+
+            </td>
+        </tr>
+    </table>
+</body>
+
+</html>

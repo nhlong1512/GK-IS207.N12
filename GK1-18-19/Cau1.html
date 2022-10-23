@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <script>
+        $(document).ready(function () {
+
+            //Hàm lấy ưcln
+            function gcd(a, b) {
+                var tmp;
+                while (b != 0) {
+                    tmp = a % b;
+                    a = b;
+                    b = tmp;
+                }
+                return a;
+            }
+
+            //Handle onClick events
+            $("#donGianButton").click(function () {
+                $('#IDKETQUA').empty();
+                console.log(+$("#IDTUSO").val());
+                console.log(+$("#IDMAUSO").val());
+                var tuso = +$("#IDTUSO").val();
+                var mauso = +$("#IDMAUSO").val();
+                var ucln = Math.abs(gcd(tuso,mauso));
+                console.log( "ucln" +ucln);
+                var ts = tuso / ucln
+                var ms = mauso / ucln
+                if (ms === 0) {
+                    $("#IDKETQUA").append("Lỗi");
+                    return;
+                }
+                if (ts > 0 && ms < 0) {
+                    ts = Math.abs(ts);
+                    ms = -(Math.abs(ms));
+                    console.log("Ts" + ts);
+                    console.log("Ms" + ms);
+                }
+                
+                if (ms === 1) {
+                    $("#IDKETQUA").append(ts);
+                    return;
+                } else {
+                    $("#IDKETQUA").append(ts + "/" + ms);
+                    return;
+                }
+            })
+        })
+
+    </script>
+</head>
+
+<body>
+    <div>
+        <label for="IDTUSO">Tử số</label>
+        <input type="number" id="IDTUSO">
+        <label for="IDMAUSO">Mẫu số</label>
+        <input type="number" id="IDMAUSO">
+        <button id="donGianButton">Đơn giản</button>
+        <div id="ketQuaRutGon">Phân số sau khi đơn giản <span id="IDKETQUA"></span></div>
+    </div>
+</body>
+
+
+</html>

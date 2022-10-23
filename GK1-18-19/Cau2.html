@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+</head>
+<style>
+    table,
+    th,
+    td {
+        border: 1px solid black;
+    }
+</style>
+<script>
+    $(document).ready(function () {
+        var listOd = [
+            {
+                id: 1,
+                name: "Hủ tiếu",
+                price: 20000,
+                qty: 0,
+                totalPrice: 0,
+            },
+            {
+                id: 2,
+                name: "Bánh canh",
+                price: 30000,
+                qty: 0,
+                totalPrice: 0,
+            },
+            {
+                id: 3,
+                name: "Bún bò",
+                price: 35000,
+                qty: 0,
+                totalPrice: 0,
+            },
+        ]
+
+        function fetch() {
+            //Clear table
+            $('#tableOd').empty();
+
+            listOd.map((c) => {
+                if (c.qty > 0) {
+                    $('#tableOd').append(
+                        `
+                        <tr class = "row-menu">
+                            <td>1</td>
+                            <td>${c.name}</td>
+                            <td>${c.qty}</td>
+                            <td>${c.price * c.qty}</td>
+                        </tr>
+                        `
+                    )
+                }
+            })
+        }
+
+        //Handle onClick ButtonThem 
+        $('#buttonThem').click(function () {
+            console.log($('#monAn').val());
+            var monAn = $('#monAn').val();
+
+            listOd.map((c) => {
+                if (c.name == monAn) {
+                    c.qty++;
+                    console.log(c);
+                }
+            })
+            console.log(listOd);
+            fetch();
+        })
+    })
+
+</script>
+
+<body>
+    <select name="monAn" id="monAn">
+        <option id="huTieu" value="Hủ tiếu">Hủ tiếu</option>
+        <option id="banhCanh" value="Bánh canh">Bánh canh</option>
+        <option id="bunBo" value="Bún bò">Bún bò</option>
+    </select>
+    <button id="buttonThem" style="margin: 10px;">Thêm</button>
+    <table id="tableOd">
+        
+    </table>
+
+</body>
+
+</html>
