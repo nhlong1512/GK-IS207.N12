@@ -19,8 +19,8 @@
     <script>
         $(document).ready(function () {
 
-            var valueBuoi; 
-                
+            var valueBuoi;
+
             var listOdRender = []
 
             var listOd = [
@@ -73,12 +73,12 @@
                 var thanhTien = 0;
                 $('#tableOd').empty();
                 $('#tableOd').append(
-                        `   
+                    `   
                         <tr>
                             <th>STT</th>
                             <th>Các món đã chọn</th>
                             <th>Tiền</th>
-                        </tr>`        
+                        </tr>`
                 )
                 listOdRender.map((c, index) => {
                     $('#tableOd').append(
@@ -94,24 +94,28 @@
                 })
                 $('#tableOd').append(
                     //Handle nếu valueBuoi là ban ngày thì thành tiền sẽ giữ nguyên, ngược lại - Ban đêm thì thành tiền sẽ x 1.2
-                        `   
+                    `   
                         <tr>
                             <td colspan="2">Tổng tiền</td>
-                            <td>${valueBuoi == 'Ban ngày'? thanhTien : thanhTien*1.2}</td>
-                        </tr>`        
+                            <td>${valueBuoi == 'Ban ngày' ? thanhTien : thanhTien * 1.2}</td>
+                        </tr>`
                 )
 
             }
 
             $('#buttonThanhTien').click(function () {
-                 //Nếu ban ngày là true thì value = ban ngày ngược lại là ban đêm
+                //Nếu ban ngày là true thì value = ban ngày ngược lại là ban đêm
                 valueBuoi = $('#banNgay').is(':checked') ? $('#banNgay').val() : $('#banDem').val();
                 var valueDSNU = $('#danhSachNuocUong').val();
-                var found = listOd.find(c => c.name == valueDSNU);
-                //Nếu trùng món thì sẽ không thêm vào list để render
-                if (!listOdRender.find(c => c.id == found.id)) {
-                    listOdRender.push(found)
+                console.log(valueDSNU);
+                for (var i = 0; i < valueDSNU.length; i++) {
+                    var found = listOd.find(c => c.name == valueDSNU[i]);
+                    //Nếu trùng món thì sẽ không thêm vào list để render
+                    if (!listOdRender.find(c => c.id == found.id)) {
+                        listOdRender.push(found)
+                    }
                 }
+
                 fetch();
             })
         })
@@ -120,7 +124,7 @@
 
 <body>
     <h3>Danh sách nước uống</h3>
-    <select name="" id="danhSachNuocUong">
+    <select name="" id="danhSachNuocUong" multiple>
         <option value="Cà phê đá">Cà phê đá</option>
         <option value="Cà phê sữa">Cà phê sữa</option>
         <option value="Cam vắt">Cam vắt</option>
