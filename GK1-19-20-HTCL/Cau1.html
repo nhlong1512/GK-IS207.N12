@@ -1,12 +1,82 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+
+    <style>
+
+    </style>
+
+    <script>
+        $(document).ready(function () {
+
+            //Handle onClick events buttonKetQua
+            $("#buttonKetQua").click(function () {
+                //Clear #ketQua
+                $('#ketQua').empty();
+                var x1, x2;
+                var x, y, z, delta;
+                x = $('#a').val();
+                y = $('#b').val();
+                z = $('#c').val();
+                if(!(x && y && z)) {
+                    $('#ketQua').append(`
+                        Vui lòng nhập đủ các hệ số
+                        `
+                    )
+                    return;
+                }
+                console.log("a = ", x, " b = ", y, " c = ", z);
+                delta = (y * y - 4 * x * z)
+                if (delta == 0) {
+                    x1 = -y / (2 * x);
+                    x2 = -y / (2 * x);
+                    $('#ketQua').append(`
+                        Phương trình có nghiệm kép ${x1} 
+                        `
+                    )
+                    return;
+                }
+                else if (delta < 0) {
+                    $('#ketQua').append(`
+                        Phương trình vô nghiệm
+                        `
+                    )
+                    return;
+                }
+                else {
+                    x1 = (-y - Math.sqrt(delta)) / (2 * x);
+                    x2 = (-y + Math.sqrt(delta)) / (2 * x);
+                    $('#ketQua').append(`
+                        Phương trình có 2 nghiệm ${x1} và ${x2}
+                        `
+                    )
+                    return;
+                }
+            })
+        })
+    </script>
 </head>
+
 <body>
-    
+    <div style="display: flex; flex-direction: column; width: 200px;">
+        <label for="a">Hệ số a</label>
+        <input type="number" id="a" name="a">
+        <label for="b">Hệ số b</label>
+        <input type="number" id="b" name="b">
+        <label for="a">Hệ số c</label>
+        <input type="number" id="c" name="c">
+    </div>
+    <button id="buttonKetQua" style="margin: 20px 0;">Kết quả</button>
+    <h3 id="ketQua">
+
+    </h3>
+
 </body>
+
 </html>
