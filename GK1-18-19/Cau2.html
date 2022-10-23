@@ -45,12 +45,14 @@
             //Clear table
             $('#tableOd').empty();
 
+            var i = 0;
             listOd.map((c) => {
+                
                 if (c.qty > 0) {
                     $('#tableOd').append(
                         `
                         <tr class = "row-menu">
-                            <td>1</td>
+                            <td>${++i}</td>
                             <td>${c.name}</td>
                             <td>${c.qty}</td>
                             <td>${c.price * c.qty}</td>
