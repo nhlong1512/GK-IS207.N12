@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+
+    <style>
+        table,
+        th,
+        td {
+            border: 1px solid black;
+        }
+    </style>
+
+    <script>
+        $(document).ready(function () {
+
+            var valueBuoi; 
+                
+            var listOdRender = []
+
+            var listOd = [
+                {
+                    id: 1,
+                    name: 'Cà phê đá',
+                    price: 15000,
+                    isBanDem: false,
+                    totalPrice: 15000,
+                },
+                {
+                    id: 2,
+                    name: 'Cà phê sữa',
+                    price: 20000,
+                    isBanDem: false,
+                    totalPrice: 20000,
+                },
+                {
+                    id: 3,
+                    name: 'Cam vắt',
+                    price: 30000,
+                    isBanDem: false,
+                    totalPrice: 30000,
+                },
+                {
+                    id: 4,
+                    name: 'Chanh muối',
+                    price: 20000,
+                    isBanDem: false,
+                    totalPrice: 20000,
+                },
+                {
+                    id: 5,
+                    name: 'Nước ngọt',
+                    price: 15000,
+                    isBanDem: false,
+                    totalPrice: 15000,
+                },
+                {
+                    id: 6,
+                    name: 'Nước suối',
+                    price: 10000,
+                    isBanDem: false,
+                    totalPrice: 10000,
+                },
+            ]
+
+            function fetch() {
+                //Clear table
+                var thanhTien = 0;
+                $('#tableOd').empty();
+                $('#tableOd').append(
+                        `   
+                        <tr>
+                            <th>STT</th>
+                            <th>Các món đã chọn</th>
+                            <th>Tiền</th>
+                        </tr>`        
+                )
+                listOdRender.map((c, index) => {
+                    $('#tableOd').append(
+                        `                
+                            <tr class = "row-menu">
+                                <td>${index + 1}</td>
+                                <td>${c.name}</td>
+                                <td>${c.price}</td>
+                            </tr>
+                        `
+                    )
+                    thanhTien += c.price;
+                })
+                $('#tableOd').append(
+                    //Handle nếu valueBuoi là ban ngày thì thành tiền sẽ giữ nguyên, ngược lại - Ban đêm thì thành tiền sẽ x 1.2
+                        `   
+                        <tr>
+                            <td colspan="2">Tổng tiền</td>
+                            <td>${valueBuoi == 'Ban ngày'? thanhTien : thanhTien*1.2}</td>
+                        </tr>`        
+                )
+
+            }
+
+            $('#buttonThanhTien').click(function () {
+                 //Nếu ban ngày là true thì value = ban ngày ngược lại là ban đêm
+                valueBuoi = $('#banNgay').is(':checked') ? $('#banNgay').val() : $('#banDem').val();
+                var valueDSNU = $('#danhSachNuocUong').val();
+                var found = listOd.find(c => c.name == valueDSNU);
+                //Nếu trùng món thì sẽ không thêm vào list để render
+                if (!listOdRender.find(c => c.id == found.id)) {
+                    listOdRender.push(found)
+                }
+                fetch();
+            })
+        })
+    </script>
+</head>
+
+<body>
+    <h3>Danh sách nước uống</h3>
+    <select name="" id="danhSachNuocUong">
+        <option value="Cà phê đá">Cà phê đá</option>
+        <option value="Cà phê sữa">Cà phê sữa</option>
+        <option value="Cam vắt">Cam vắt</option>
+        <option value="Chanh muối">Chanh muối</option>
+        <option value="Nước ngọt">Nước ngọt</option>
+        <option value="Nước suối">Cà phê sữa</option>
+    </select>
+    <div>
+        <input type="radio" id="banNgay" name="buoi" value="Ban ngày" checked>
+        <label for="banNgay">Ban ngày</label>
+        <input type="radio" id="banDem" name="buoi" value="Ban đêm">
+        <label for="banDem">Ban đêm</label>
+    </div>
+    <button style="margin-top: 20px;" id="buttonThanhTien">Thành tiền</button>
+    <table id="tableOd">
+
+    </table>
+</body>
+
+</html>
